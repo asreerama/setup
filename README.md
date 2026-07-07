@@ -9,8 +9,13 @@ This repository contains my personal setup scripts for new machines.
 Run this one-liner on any new machine:
 
 ```bash
-curl setup.asreerama.me | bash
+curl -fsSL setup.asreerama.me | bash
 ```
+
+> The `-L` is required: `setup.asreerama.me` is served over GitHub Pages, which
+> redirects `http` → `https`. Without `-L`, curl pipes the redirect page (not the
+> script) into bash. `-fsS` makes curl fail loudly on errors instead of piping an
+> error page to your shell.
 
 ### The Manual Way
 
@@ -19,10 +24,10 @@ curl setup.asreerama.me | bash
     git clone https://github.com/asreerama/setup.git ~/.personal-setup
     ```
 
-2.  Run the install script:
+2.  Run the install script (it's a bash script despite the `.html` name):
     ```bash
     cd ~/.personal-setup
-    ./index.html
+    bash index.html
     ```
 
 ## Setup Instructions (One-time)
