@@ -47,4 +47,18 @@ To enable the `setup.asreerama.me` shortcut:
 
 ## Scripts
 
-*   `scripts/enable_touchid.sh`: Enables TouchID for `sudo` commands.
+*   `scripts/enable_touchid.sh`: Enables Touch ID for `sudo`. On macOS 14+ it uses
+    the update-safe `/etc/pam.d/sudo_local` file.
+
+### macOS 26 "Tahoe" and later
+
+Apple protects `/etc/pam.d` with System Integrity Protection (SIP) on Tahoe, so
+Touch ID for `sudo` **cannot** be enabled by any script (even as root) while SIP
+is on. To enable it you must temporarily disable SIP:
+
+1.  Shut down. On Apple Silicon, hold the power button until "Loading startup
+    options" appears → **Options** → **Continue** (Recovery).
+2.  **Utilities → Terminal**, run `csrutil disable`, then restart.
+3.  Run `scripts/enable_touchid.sh` (or `curl -fsSL setup.asreerama.me | bash`).
+4.  Recommended: return to Recovery and run `csrutil enable`. The `sudo_local`
+    file persists after SIP is re-enabled.

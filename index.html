@@ -26,7 +26,10 @@ chmod +x scripts/*.sh
 # 3. Run Configuration Scripts
 echo "🔧 Running configuration scripts..."
 
-# Enable TouchID for sudo
-./scripts/enable_touchid.sh
+# Enable TouchID for sudo (don't abort the whole run if it needs attention,
+# e.g. SIP-protected /etc/pam.d on macOS 26 Tahoe — the script explains next steps).
+if ./scripts/enable_touchid.sh; then :; else
+  echo "⚠️  Touch ID step needs attention (see the message above)."
+fi
 
 echo "✅ Setup complete!"
